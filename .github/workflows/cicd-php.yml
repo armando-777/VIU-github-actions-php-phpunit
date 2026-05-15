@@ -22,6 +22,6 @@ jobs:
       - name: Docker Login
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
       - name: Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/viuejemplo:latest .
+        run: docker build -t dcarmando/viuejemplo:latest .
       - name: Push
-        run: docker push ${{ secrets.DOCKER_USER }}/viuejemplo:latest
+        run: docker push dcarmando/viuejemplo:latest
