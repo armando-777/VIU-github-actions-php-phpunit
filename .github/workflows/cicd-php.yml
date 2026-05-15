@@ -5,29 +5,23 @@ on: [push]
 jobs:
   ci:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v1
-
       - name: Validate composer.json and composer.lock
         run: composer validate
-
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
-
       - name: Run test suite
         run: composer run-script testdox
+
   cd:
     runs-on: ubuntu-latest
     needs: ci
-
     steps:
       - uses: actions/checkout@v1
       - name: Docker Login
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
       - name: Build
-        run: 
-          docker build -t ${{ secrets.DOCKER_USER }}/viuejemplo:latest .
+        run: docker build -t ${{ secrets.DOCKER_USER }}/viuejemplo:latest .
       - name: Push
-        run: 
-          docker push ${{ secrets.DOCKER_USER }}/viuejemplo:latest    
+        run: docker push ${{ secrets.DOCKER_USER }}/viuejemplo:latest
